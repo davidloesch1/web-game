@@ -209,6 +209,12 @@ class Minesweeper {
             this.firstClick = false;
             this.placeMines(row, col);
             this.startTimer();
+            this.trackEvent('Game Started', {
+                level_int: this.currentLevel + 1,
+                rows_int: this.rows,
+                cols_int: this.cols,
+                mines_int: this.totalMines,
+            });
         }
 
         if (this.grid[row][col] === -1) {
@@ -262,6 +268,11 @@ class Minesweeper {
     revealMine(row, col) {
         this.gameOver = true;
         this.stopTimer();
+        this.trackEvent('Game Completed', {
+            level_int: this.currentLevel + 1,
+            outcome_str: 'loss',
+            time_seconds_int: this.seconds,
+        });
 
         const hitCell = this.getCell(row, col);
         hitCell.classList.add('mine-hit');
@@ -293,6 +304,11 @@ class Minesweeper {
             this.gameOver = true;
             this.stopTimer();
             const time = this.formatTime(this.seconds);
+            this.trackEvent('Game Completed', {
+                level_int: this.currentLevel + 1,
+                outcome_str: 'win',
+                time_seconds_int: this.seconds,
+            });
             this.showOverlay(
                 'Level Complete!',
                 `Cleared level ${this.currentLevel + 1} in ${time}`,
@@ -374,6 +390,14 @@ class Minesweeper {
         this.minesDisplay.textContent = this.totalMines;
         this.timerDisplay.textContent = this.formatTime(this.seconds);
         this.flagsDisplay.textContent = `${this.flagCount}/${this.totalMines}`;
+    }
+
+    trackEvent(name, properties) {
+        try {
+            if (typeof FS === 'function') {
+                FS('trackEvent', { name, properties });
+            }
+        } catch (_) { /* FullStory may not be loaded */ }
     }
 
     saveProgress() {
