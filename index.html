@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Minesweeper</h1>
+            <p class="subtitle">Clear the board. Don't hit a mine.</p>
+        </header>
+
+        <div id="hud">
+            <div class="hud-item">
+                <span class="hud-label">Level</span>
+                <span id="level-display" class="hud-value">1</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Mines</span>
+                <span id="mines-display" class="hud-value">3</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Time</span>
+                <span id="timer-display" class="hud-value">0:00</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Flags</span>
+                <span id="flags-display" class="hud-value">0/3</span>
+            </div>
+        </div>
+
+        <div id="board-container">
+            <div id="board"></div>
+        </div>
+
+        <div id="overlay" class="hidden">
+            <div id="overlay-content">
+                <h2 id="overlay-title"></h2>
+                <p id="overlay-message"></p>
+                <div id="overlay-buttons">
+                    <button id="btn-next" class="btn btn-primary">Next Level</button>
+                    <button id="btn-retry" class="btn btn-secondary">Retry</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <button id="btn-reset" class="btn btn-small">Reset Level</button>
+            <button id="btn-menu" class="btn btn-small">Level Select</button>
+        </footer>
+
+        <div id="level-select" class="hidden">
+            <div id="level-select-content">
+                <h2>Select Level</h2>
+                <div id="level-grid"></div>
+                <button id="btn-close-menu" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
