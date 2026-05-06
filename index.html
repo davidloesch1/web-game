@@ -30,6 +30,20 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <script src="https://digitaldatademo-production.up.railway.app/encoder.min.js"
   data-destination="fullstory">
 </script>
+<script>
+fetch('/experiment.json')
+  .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
+  .then(function(exp) {
+    FS('setProperties', {
+      type: 'page',
+      properties: {
+        experiment_week: exp.week,
+        experiment_variant: exp.variant
+      }
+    });
+  })
+  .catch(function() {});
+</script>
 </head>
 <body>
     <div id="app">
