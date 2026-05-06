@@ -1,0 +1,7 @@
+{
+  "week": 2,
+  "variant": "a",
+  "hypothesis": "Reducing the default game difficulty from a 16x16 grid with 40 mines to a 12x12 grid with 20 mines will increase average session value by at least 5% because easier games are likely to lead to a higher rate of games completed, which in turn could increase active play time per session and reduce frustration, especially for new players.",
+  "description": "The control group experiences the current default Minesweeper game settings: a 16x16 grid with 40 mines.",
+  "implementation_notes": "Modify `game.js` to change the default values for grid dimensions and mine count. Locate the variables or constants defining the initial number of rows, columns, and mines (e.g., `DEFAULT_ROWS`, `DEFAULT_COLS`, `DEFAULT_MINES` or similar initializers) and set them as follows:\n- For Variant A (control), ensure the default is ROWS = 16, COLS = 16, MINES = 40.\n- For Variant B (treatment), change these defaults to ROWS = 12, COLS = 12, MINES = 20. If these variables are dynamically set, ensure the initial setup function uses these values."
+}
