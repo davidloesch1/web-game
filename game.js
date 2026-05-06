@@ -28,6 +28,7 @@ class Minesweeper {
         this.levelSelect = document.getElementById('level-select');
         this.levelGrid = document.getElementById('level-grid');
         this.btnCloseMenu = document.getElementById('btn-close-menu');
+        this.btnMode = document.getElementById('btn-mode');
 
         this.currentLevel = this.loadProgress();
         this.highestUnlocked = this.currentLevel;
@@ -39,6 +40,7 @@ class Minesweeper {
         this.timer = null;
         this.seconds = 0;
         this.flagCount = 0;
+        this.mode = 'dig';
 
         this.bindEvents();
         this.startLevel(this.currentLevel);
@@ -66,6 +68,21 @@ class Minesweeper {
         this.btnCloseMenu.addEventListener('click', () => {
             this.levelSelect.classList.add('hidden');
         });
+
+        this.btnMode.addEventListener('click', () => {
+            this.toggleMode();
+        });
+    }
+
+    toggleMode() {
+        this.mode = this.mode === 'dig' ? 'flag' : 'dig';
+        if (this.mode === 'dig') {
+            this.btnMode.textContent = '⛏️ Dig';
+            this.btnMode.classList.remove('flag-mode');
+        } else {
+            this.btnMode.textContent = '🚩 Flag';
+            this.btnMode.classList.add('flag-mode');
+        }
     }
 
     getLevelConfig(level) {
@@ -92,6 +109,9 @@ class Minesweeper {
         this.firstClick = true;
         this.flagCount = 0;
         this.seconds = 0;
+        this.mode = 'dig';
+        this.btnMode.textContent = '⛏️ Dig';
+        this.btnMode.classList.remove('flag-mode');
 
         if (this.timer) clearInterval(this.timer);
         this.timer = null;
@@ -143,6 +163,7 @@ class Minesweeper {
     renderBoard() {
         this.boardEl.innerHTML = '';
         this.boardEl.style.gridTemplateColumns = `repeat(${this.cols}, 36px)`;
+        this.boardEl.oncontextmenu = (e) => e.preventDefault();
 
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.cols; c++) {
@@ -151,11 +172,7 @@ class Minesweeper {
                 cell.dataset.row = r;
                 cell.dataset.col = c;
 
-                cell.addEventListener('click', (e) => this.handleClick(r, c));
-                cell.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
-                    this.handleRightClick(r, c);
-                });
+                cell.addEventListener('click', () => this.handleClick(r, c));
 
                 this.boardEl.appendChild(cell);
             }
@@ -179,8 +196,14 @@ class Minesweeper {
 
     handleClick(row, col) {
         if (this.gameOver) return;
-        if (this.flagged[row][col]) return;
         if (this.revealed[row][col]) return;
+
+        if (this.mode === 'flag') {
+            this.handleFlag(row, col);
+            return;
+        }
+
+        if (this.flagged[row][col]) return;
 
         if (this.firstClick) {
             this.firstClick = false;
@@ -197,10 +220,7 @@ class Minesweeper {
         this.checkWin();
     }
 
-    handleRightClick(row, col) {
-        if (this.gameOver) return;
-        if (this.revealed[row][col]) return;
-
+    handleFlag(row, col) {
         this.flagged[row][col] = !this.flagged[row][col];
         this.flagCount += this.flagged[row][col] ? 1 : -1;
 

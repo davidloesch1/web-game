@@ -88,6 +88,33 @@ header h1 {
     font-variant-numeric: tabular-nums;
 }
 
+#mode-toggle {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-mode {
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    background: var(--surface-light);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    min-width: 120px;
+}
+
+.btn-mode:hover {
+    background: var(--cell-hover);
+}
+
+.btn-mode.flag-mode {
+    border-color: var(--warning);
+    background: rgba(243, 156, 18, 0.15);
+}
+
 #board-container {
     display: flex;
     justify-content: center;
