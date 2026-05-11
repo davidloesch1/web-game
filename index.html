@@ -34,15 +34,30 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 fetch('/experiment.json')
   .then(function(r) { return r.ok ? r.json() : Promise.reject(); })
   .then(function(exp) {
+    var version = exp.site_version || '1.2.0';
     FS('setProperties', {
       type: 'page',
       properties: {
-        experiment_week: exp.week,
-        experiment_variant: exp.variant
+        site_id: 'minesweeper',
+        page_name: 'Game Board',
+        experiment_id: exp.experiment_id || ('minesweeper-v' + version),
+        experiment_variant: exp.variant === 'a' ? 'control' : 'challenger',
+        site_version: version,
+        experiment_week: exp.week
       }
     });
   })
-  .catch(function() {});
+  .catch(function() {
+    FS('setProperties', {
+      type: 'page',
+      properties: {
+        site_id: 'minesweeper',
+        page_name: 'Game Board',
+        experiment_variant: 'control',
+        site_version: '1.2.0'
+      }
+    });
+  });
 </script>
 </head>
 <body>

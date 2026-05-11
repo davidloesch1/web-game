@@ -1,6 +1,8 @@
 {
   "week": 2,
   "variant": "a",
+  "experiment_id": "minesweeper-v1.2.0",
+  "site_version": "1.2.0",
   "hypothesis": "",
   "description": "Control — current production game",
   "implementation_notes": ""
