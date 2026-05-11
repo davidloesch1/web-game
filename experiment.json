@@ -1,9 +1,10 @@
 {
-  "week": 2,
-  "variant": "a",
+  "site_id": "minesweeper",
   "experiment_id": "minesweeper-v1.2.0",
+  "experiment_variant": "control",
   "site_version": "1.2.0",
+  "week": 3,
   "hypothesis": "",
-  "description": "Control — current production game",
+  "description": "Control \u2014 current production site",
   "implementation_notes": ""
 }
